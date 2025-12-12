@@ -2,14 +2,7 @@ import baseApi from "@/redux/api/baseApi";
 
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createCategory: builder.mutation({
-      query: (category) => ({
-        url: "/category/create",
-        method: "POST",
-        body: category,
-      }),
-      invalidatesTags: ["Terminal"],
-    }),
+
     createSubCategory: builder.mutation({
       query: ({ data, id }) => ({
         url: `/sub-category/create/${id}`,
@@ -43,7 +36,6 @@ const categoryApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useCreateCategoryMutation,
   useCreateSubCategoryMutation,
   useGetCategoriesQuery,
   useGetServicesQuery,

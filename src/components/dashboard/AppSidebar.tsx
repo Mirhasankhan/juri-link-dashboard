@@ -20,16 +20,17 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import logo from "@/assets/logo/logo2.png";
-import { LayoutDashboard, Users, UserCheck, LogOut, Settings, ChartBarStacked, ListMinus, CircleDollarSign, UserCog } from "lucide-react"
+import { LayoutDashboard, Users, UserCheck, LogOut, Settings, ListMinus, CircleDollarSign, UserCog } from "lucide-react"
+import { FaWallet } from "react-icons/fa";
 
 // Menu items
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard/overview" },
   { title: "User Management", icon: Users, href: "/dashboard/users" },
-  { title: "Category Management", icon: ChartBarStacked, href: "/dashboard/categories" },
   { title: "Service Management", icon: ListMinus, href: "/dashboard/services" },
   { title: "Provider Management", icon: UserCheck, href: "/dashboard/providers" },
   { title: "Admin & Role", icon: UserCog, href: "/dashboard/admin-management" },
+    { title: "Withdraws", icon: FaWallet, href: "/dashboard/withdraws" },
   { title: "Earning Overview", icon: CircleDollarSign, href: "/dashboard/transfer" },
   // { title: "Help Center", icon: HelpCircle, href: "/dashboard/help" },
   // { title: "Message", icon: MessageCircle, href: "/dashboard/messages" },
