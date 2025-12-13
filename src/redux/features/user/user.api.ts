@@ -7,14 +7,14 @@ const useApi = baseApi.injectEndpoints({
         url: `/admin/all-users`,
         method: "GET",
       }),
-      providesTags: ["Terminal"],
+      providesTags: ["User"],
     }),
     allLawyers: builder.query({
       query: () => ({
         url: `/admin/all-lawyers`,
         method: "GET",
       }),
-      providesTags: ["Terminal"],
+      providesTags: ["User"],
     }),
     changePassword: builder.mutation({
       query: (data) => ({
@@ -50,29 +50,14 @@ const useApi = baseApi.injectEndpoints({
         url: `/booking/admin/earnings`,
         method: "GET",
       }),
-    }),
-    allProvider: builder.query({
-      query: () => ({
-        url: `/users/providers`,
-        method: "GET",
-      }),
-      providesTags: ["Terminal"],
-    }),
-    allBookings: builder.query({
-      query: () => ({
-        url: `/booking/all`,
-        method: "GET",
-      }),
-      providesTags: ["Terminal"],
-    }),
+    }),   
+    
   }),
 });
 
 export const {
   useAllUsersQuery,
-  useAllLawyersQuery,
-  useAllProviderQuery,
-  useAllBookingsQuery,
+  useAllLawyersQuery, 
   useDeleteAdminMutation,
   useChangePasswordMutation,
   useCreateAdminMutation,

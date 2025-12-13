@@ -12,7 +12,7 @@ import NoData from "../common/NoData";
 import {
   useAcceptRequestMutation,
   useWithdrawRequestsQuery,
-} from "@/redux/features/terminal/withdraw.api";
+} from "@/redux/features/withdraw/withdraw.api";
 import { toast } from "sonner";
 
 const AllWithdrawRequests = () => {

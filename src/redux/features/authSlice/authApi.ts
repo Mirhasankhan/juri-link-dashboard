@@ -10,28 +10,13 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    register: builder.mutation({
-      query: (data) => ({
-        url: "/users/register",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["User"],
-    }),
     userrsByTime: builder.query({
       query: (type) => ({
         url: `/users/time?type=${type}`,
         method: "GET",
       }),
     }),
-    socialAuth: builder.mutation({
-      query: (data) => ({
-        url: "/auth/social-login",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["User"],
-    }),
+   
     sendOtp: builder.mutation({
       query: (email) => ({
         url: "/auth/forgot-password",
@@ -80,14 +65,12 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useLoginMutation,
-useUserrsByTimeQuery,
-  useRegisterMutation,
+  useUserrsByTimeQuery,
   useGetMeQuery,
   useSendOtpMutation,
   useVerifyOtpMutation,
   useResetPasswordMutation,
   useUpdateUserMutation,
-  useSocialAuthMutation,
 
   useAnalysisQuery,
 } = authApi;
