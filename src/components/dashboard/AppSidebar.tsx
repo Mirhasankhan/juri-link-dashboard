@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 
-
 import {
   Sidebar,
   SidebarContent,
@@ -18,54 +17,73 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import logo from "@/assets/logo/logo2.png";
-import { LayoutDashboard, Users, UserCheck, LogOut, Settings, ListMinus, CircleDollarSign, UserCog } from "lucide-react"
+import {
+  LayoutDashboard,
+  Users,
+  UserCheck,
+  LogOut,
+  Settings,
+  ListMinus,
+  CircleDollarSign,
+  UserCog,
+} from "lucide-react";
 import { FaWallet } from "react-icons/fa";
+import { MdBugReport } from "react-icons/md";
 
 // Menu items
 const menuItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard/overview" },
   { title: "User Management", icon: Users, href: "/dashboard/users" },
   { title: "Service Management", icon: ListMinus, href: "/dashboard/services" },
-  { title: "Provider Management", icon: UserCheck, href: "/dashboard/providers" },
+  {
+    title: "Provider Management",
+    icon: UserCheck,
+    href: "/dashboard/providers",
+  },
   { title: "Admin & Role", icon: UserCog, href: "/dashboard/admin-management" },
-    { title: "Withdraws", icon: FaWallet, href: "/dashboard/withdraws" },
-  { title: "Earning Overview", icon: CircleDollarSign, href: "/dashboard/transfer" },
+  { title: "Withdraws", icon: FaWallet, href: "/dashboard/withdraws" },
+  { title: "Reports", icon: MdBugReport, href: "/dashboard/reports" },
+  {
+    title: "Earning Overview",
+    icon: CircleDollarSign,
+    href: "/dashboard/transfer",
+  },
   // { title: "Help Center", icon: HelpCircle, href: "/dashboard/help" },
   // { title: "Message", icon: MessageCircle, href: "/dashboard/messages" },
   { title: "Settings", icon: Settings, href: "/dashboard/settings" },
-]
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleLogout = () => {
     console.log("clicked");
     try {
       // Clear localStorage and cookies
-      localStorage.removeItem("accessToken")
-      Cookies.remove("token")
-      localStorage.removeItem("persist:auth")
+      localStorage.removeItem("accessToken");
+      Cookies.remove("token");
+      localStorage.removeItem("persist:auth");
       // Optional: Clear sessionStorage if needed
-      sessionStorage.clear()
-      router.push("/login")
+      sessionStorage.clear();
+      router.push("/login");
       console.log("came here"); // Redirect to the home page
       // window.location.reload()
- 
-      toast.success("Logout successful")
+
+      toast.success("Logout successful");
     } catch (err) {
-      console.error("Logout Error:", err)
-      toast.error("There was an error logging out.")
+      console.error("Logout Error:", err);
+      toast.error("There was an error logging out.");
     }
-  }
+  };
 
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
-           <Link href="/">
+          <Link href="/">
             <Image
               src={logo}
               alt="Quick Online Deals"
@@ -79,16 +97,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-         <SidebarMenu className="space-y-1">
-            {menuItems.map((item) => {
-              const isActive = pathname === item.href
-              const IconComponent = item.icon
+            <SidebarMenu className="space-y-1">
+              {menuItems.map((item) => {
+                const isActive = pathname === item.href;
+                const IconComponent = item.icon;
 
-              return (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    className={`
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      className={`
                       w-full h-12 rounded-lg transition-all duration-200 text-white 
                       ${
                         isActive
@@ -96,16 +114,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           : "text-gray-600 "
                       }
                     `}
-                  >
-                    <Link href={item.href} className="flex items-center gap-3 px-3">
-                      <IconComponent className="h-8 w-8 flex-shrink-0" />
-                      <span className="font-medium">{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )
-            })}
-          </SidebarMenu>
+                    >
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-3 px-3"
+                      >
+                        <IconComponent className="h-8 w-8 flex-shrink-0" />
+                        <span className="font-medium">{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
@@ -113,7 +134,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Logout">
-              <button onClick={handleLogout}  className="w-full bg-bprimary/10  text-bprimary cursor-pointer justify-start gap-2">
+              <button
+                onClick={handleLogout}
+                className="w-full bg-bprimary/10  text-bprimary cursor-pointer justify-start gap-2"
+              >
                 <LogOut className="h-4 w-4" />
                 <span>Logout</span>
               </button>
@@ -123,5 +147,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

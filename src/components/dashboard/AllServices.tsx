@@ -2,11 +2,12 @@
 
 import { useServicesQuery } from "@/redux/features/service/service.api";
 import { SkeletonCard } from "../common/Skeleton";
-import { Pencil } from "lucide-react";
+import {  Pencil } from "lucide-react";
+import ViewServiceModal from "./ViewServiceModal";
 
 const AllServices = () => {
   const { data: services, isLoading } = useServicesQuery("");
-  console.log(services?.data);
+
   return (
     <div>
       <h1 className="text-3xl font-medium mt-8 pb-3">Available Services</h1>
@@ -22,8 +23,10 @@ const AllServices = () => {
               key={service._id}
             >
               <h1>{service.serviceName}</h1>
-              <div className="bg-bprimary/10 text-bprimary p-1 rounded-[3px]">
-                <Pencil size={20}></Pencil>
+              <div className="gap-2 flex p-1 cursor-pointer rounded-[3px]">
+                <Pencil  className="text-bprimary rounded-[6px] p-1 bg-bprimary/20" size={30}></Pencil>
+               <ViewServiceModal id="sdfsdfsdf"></ViewServiceModal>
+          
               </div>
             </div>
           ))
