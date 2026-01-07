@@ -12,7 +12,6 @@ import { usePathname } from 'next/navigation';
 
 export default function AuthWrapper({ children }: { children: ReactNode }) {
   const pathName = usePathname();
-  console.log("pathName", pathName);
 
   return (
     <div className="p-4">

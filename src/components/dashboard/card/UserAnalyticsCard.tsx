@@ -8,7 +8,6 @@ import { useState } from "react";
 export default function UserAnalyticsCard() {
   const [current, setCurrent] = useState("daily");
   const { data: users } = useUserrsByTimeQuery(current);
-  console.log(users?.result?.profileImages);
 
   return (
     <Card className="w-full h-full flex flex-col justify-around bg-gray-50 ">

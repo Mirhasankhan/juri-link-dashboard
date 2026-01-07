@@ -31,7 +31,7 @@ export default function Footer() {
     resolver: zodResolver(subscribeSchema),
   });
   const role = useSelector((state: RootState) => state.auth.user?.role);
-  console.log("my role", role);
+
   const onSubmit = async (data: SubscribeFormValues) => {
     try {
       console.log("Subscription email:", data.email);

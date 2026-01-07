@@ -42,9 +42,7 @@ export default function RespondToReportModal({
     };
 
     const res: any = await respondToReport(data);
-
-    console.log(res);
-
+    
     if (res?.data) {
       toast.success(res.data.message || "Report updated successfully");
       setOpen(false);

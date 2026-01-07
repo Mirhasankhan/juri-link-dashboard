@@ -58,7 +58,7 @@ export default function ResetPassword() {
         toast.error("Passwords must match!");
         return;
     }
-    console.log("data", data);
+  
     // const response = await resetPassword({data, token}).unwrap()
     // if(response){
     //     console.log("res");

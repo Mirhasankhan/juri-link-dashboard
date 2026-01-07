@@ -15,8 +15,7 @@ import RespondToReportModal from "./modal/ReportResponseModal";
 
 const AllReports = () => {
   const { data: reports, isLoading, isFetching } = useReportsQuery("");
-  console.log(reports?.data);
-
+ 
   return (
     <div>
       <div className="p-5 mb-6 bg-white rounded-xl">

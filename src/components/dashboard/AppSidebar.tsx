@@ -59,8 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    console.log("clicked");
+  const handleLogout = () => {   
     try {
       // Clear localStorage and cookies
       localStorage.removeItem("accessToken");

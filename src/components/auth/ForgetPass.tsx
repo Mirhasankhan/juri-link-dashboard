@@ -34,8 +34,7 @@ export default function ForgetPass() {
 //   const router = useRouter();
 
   const onSubmit = async (data: LoginFormValues) => {
-    try {
-      console.log("Login Data:", data);
+    try {   
       console.log("data", data);
 
 

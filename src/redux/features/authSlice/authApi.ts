@@ -38,13 +38,6 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    analysis: builder.query({
-      query: () => ({
-        url: "/users/analysis",
-        method: "GET",
-      }),
-    }),
-
     resetPassword: builder.mutation({
       query: (data: { password: string }) => ({
         url: "/auth/reset-password",
@@ -71,6 +64,4 @@ export const {
   useVerifyOtpMutation,
   useResetPasswordMutation,
   useUpdateUserMutation,
-
-  useAnalysisQuery,
 } = authApi;
