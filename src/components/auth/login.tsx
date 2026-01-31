@@ -58,7 +58,7 @@ export default function LoginForm() {
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await loginUser(data).unwrap();
-      
+
       if (response?.success) {
         const accessToken = response?.data?.accessToken;
         if (accessToken) {
@@ -209,7 +209,19 @@ export default function LoginForm() {
             {isLoading ? "Signing In..." : "Sign In"}
           </Button>
 
-          <div className="text-center text-sm text-slate-600">
+          <div className="text-center text-sm cursor-pointer mt-20">
+            <span className="text-[#2D2D2D]">
+              © {new Date().getFullYear()} Juri Link. All rights reserved.
+            </span>
+            {/* <span className="text-bprimary hover:underline font-semibold ml-3">
+              Term & Condition
+            </span>
+            <span className="text-bprimary hover:underline font-semibold border-l border-[#D1D6DB] pl-4 ml-4">
+              Privacy & Policy
+            </span> */}
+          </div>
+
+          {/* <div className="text-center text-sm text-slate-600">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
@@ -217,7 +229,7 @@ export default function LoginForm() {
             >
               Sign Up
             </Link>
-          </div>
+          </div> */}
         </form>
       </div>
     </AnimationWrapper>
