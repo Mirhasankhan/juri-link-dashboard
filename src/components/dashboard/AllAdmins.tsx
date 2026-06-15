@@ -21,7 +21,6 @@ import {
 } from "@/redux/features/user/user.api";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
-import { Skeleton } from "../ui/skeleton";
 import NoData from "../common/NoData";
 import { toast } from "sonner";
 import CreateAdminModal from "./modal/AddAdminModal";
@@ -50,35 +49,6 @@ const AllAdmins = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-10 w-32" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-32 w-full" />
-          ))}
-        </div>
-        <div className="bg-white rounded-xl border shadow-sm p-6">
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-center space-x-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-[200px]" />
-                  <Skeleton className="h-3 w-[300px]" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -92,12 +62,12 @@ const AllAdmins = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Shield className="h-7 w-7 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
+            <Shield className="h-7 w-7 text-bprimary" />
             Admin Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage and monitor system administrators
+            Manage and monitor system administrators and credentials
           </p>
         </div>
         <CreateAdminModal />
@@ -105,52 +75,56 @@ const AllAdmins = () => {
     
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
-              <TableRow className="bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-150 border-b-2 border-gray-200">
-                <TableHead className="font-semibold text-gray-700 py-4">
+              <TableRow className="bg-gray-50/75 border-b border-gray-100">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4" />
+                    <Shield className="h-4 w-4 text-gray-400" />
                     Admin Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <UserCog className="h-4 w-4" />
+                    <UserCog className="h-4 w-4 text-gray-400" />
                     Assigned Role
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-4 w-4 text-gray-400" />
                     Active From
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700 text-center">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {admins?.data?.length > 0 ? (
+              {isLoading ? (
+                 <>
+                 <NoData isLoading={isLoading} isFetching={isFetching} title="Admins"/>
+                </>
+              ) : admins?.data?.length > 0 ? (
                 <>
                   {admins?.data?.map((admin: any, index: number) => (
                     <TableRow
                       key={admin._id}
-                      className="hover:bg-blue-50/50 transition-colors border-b border-gray-100"
+                      className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
                     >
                       <TableCell className="py-4">
                         <div className="flex items-center space-x-3">
-                          <Avatar className="h-11 w-11 border-2 border-gray-200 shadow-sm">
+                          <Avatar className="h-11 w-11 border border-gray-100 shadow-sm transition-transform duration-200 hover:scale-105">
                             <AvatarImage
                               src={
                                 admin?.profileImage ||
@@ -158,23 +132,23 @@ const AllAdmins = () => {
                               }
                               alt={admin?.adminName}
                             />
-                            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+                            <AvatarFallback className="bg-gradient-to-br from-bprimary to-indigo-600 text-white font-semibold text-sm">
                               {admin?.adminName?.charAt(0)?.toUpperCase() ||
                                 "A"}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-semibold text-gray-900">
+                            <p className="font-semibold text-gray-900 leading-tight">
                               {admin?.adminName}
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-400 mt-0.5">
                               Admin #{index + 1}
                             </p>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-600 font-medium">
                           {admin?.email}
                         </span>
                       </TableCell>
@@ -185,22 +159,26 @@ const AllAdmins = () => {
                               ? "default"
                               : "secondary"
                           }
-                          className="font-semibold"
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${
+                            admin?.role === "UserAdmin"
+                              ? "bg-bprimary/10 text-bprimary hover:bg-bprimary/20"
+                              : "bg-amber-50 text-amber-700 hover:bg-amber-100/80"
+                          }`}
                         >
                           {admin?.role}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-600">
                           {formatDate(admin?.createdAt)}
                         </span>
                       </TableCell>
                       <TableCell className="text-center">
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <button className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
+                            <button className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
                               <Trash className="h-4 w-4" />
-                              <span className="text-sm font-medium">
+                              <span className="text-xs font-semibold uppercase tracking-wider">
                                 Delete
                               </span>
                             </button>
@@ -224,7 +202,7 @@ const AllAdmins = () => {
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDeleteAdmin(admin?._id)}
-                                className="bg-red-600 hover:bg-red-700"
+                                className="bg-red-600 hover:bg-red-700 text-white"
                               >
                                 Delete Admin
                               </AlertDialogAction>

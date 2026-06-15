@@ -19,90 +19,67 @@ import {
   ShoppingBag,
   DollarSign,
 } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
+
 
 const AllUsers = () => {
   const { data: users, isLoading, isFetching } = useAllUsersQuery("");
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-10 w-32" />
-        </div>
-        <div className="bg-white rounded-xl border shadow-sm p-6">
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-center space-x-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-[200px]" />
-                  <Skeleton className="h-3 w-[300px]" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  } 
+  console.log(users);
 
   return (
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Users className="h-7 w-7 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
+            <Users className="h-7 w-7 text-bprimary" />
             All Users
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage and view all registered users
+            Manage and view all registered users in the platform
           </p>
-        </div>        
+        </div>
       </div>
-     
+
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
-              <TableRow className="bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-150 border-b-2 border-gray-200">
-                <TableHead className="font-semibold text-gray-700 py-4">
+              <TableRow className="bg-gray-50/75 border-b border-gray-100">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
+                    <Users className="h-4 w-4 text-gray-400" />
                     User Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
+                    <Phone className="h-4 w-4 text-gray-400" />
                     Phone Number
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
+                    <MapPin className="h-4 w-4 text-gray-400" />
                     Address
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700 text-center">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
                   <div className="flex items-center justify-center gap-2">
-                    <ShoppingBag className="h-4 w-4" />
+                    <ShoppingBag className="h-4 w-4 text-gray-400" />
                     Bookings
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700 text-right">
+                <TableHead className="font-semibold text-gray-600 text-right text-xs uppercase tracking-wider">
                   <div className="flex items-center justify-end gap-2">
-                    <DollarSign className="h-4 w-4" />
+                    <DollarSign className="h-4 w-4 text-gray-400" />
                     Spending
                   </div>
                 </TableHead>
@@ -110,16 +87,20 @@ const AllUsers = () => {
             </TableHeader>
 
             <TableBody>
-              {users?.data?.length > 0 ? (
+              {isLoading ? (
+                <>
+                  <NoData isLoading={isLoading} isFetching={isFetching} title="Users" />
+                </>
+              ) : users?.data?.length > 0 ? (
                 <>
                   {users?.data?.map((user: any, index: number) => (
                     <TableRow
                       key={user._id}
-                      className="hover:bg-blue-50/50 transition-colors border-b border-gray-100"
+                      className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
                     >
                       <TableCell className="py-4">
                         <div className="flex items-center space-x-3">
-                          <Avatar className="h-11 w-11 border-2 border-gray-200 shadow-sm">
+                          <Avatar className="h-11 w-11 border border-gray-100 shadow-sm transition-transform duration-200 hover:scale-105">
                             <AvatarImage
                               src={
                                 user?.profileImage ||
@@ -127,38 +108,36 @@ const AllUsers = () => {
                               }
                               alt={user?.fullName}
                             />
-                            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+                            <AvatarFallback className="bg-gradient-to-br from-bprimary to-indigo-600 text-white font-semibold text-sm">
                               {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-semibold text-gray-900">
+                            <p className="font-semibold text-gray-900 leading-tight">
                               {user?.fullName}
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-400 mt-0.5">
                               User #{index + 1}
                             </p>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-700">
-                            {user?.email}
-                          </span>
-                        </div>
+                        <span className="text-sm text-gray-600 font-medium">
+                          {user?.email}
+                        </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-600">
                           {user?.phone || (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-gray-300">—</span>
                           )}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700 max-w-[200px] truncate block">
+                        <span className="text-sm text-gray-600 max-w-[200px] truncate block" title={user?.location}>
                           {user?.location || (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-gray-300">—</span>
                           )}
                         </span>
                       </TableCell>
@@ -167,13 +146,16 @@ const AllUsers = () => {
                           variant={
                             user?.totalBookings > 0 ? "default" : "secondary"
                           }
-                          className="font-semibold"
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 ${user?.totalBookings > 0
+                              ? "bg-bprimary/10 text-bprimary hover:bg-bprimary/20 border-none"
+                              : "bg-gray-100 text-gray-500 hover:bg-gray-200/80 border-none"
+                            }`}
                         >
                           {user?.totalBookings || 0}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <span className="font-semibold text-green-600">
+                        <span className="font-semibold text-emerald-600">
                           ${user?.totalSpending?.toFixed(2) || "0.00"}
                         </span>
                       </TableCell>

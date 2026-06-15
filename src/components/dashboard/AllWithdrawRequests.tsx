@@ -45,34 +45,6 @@ const AllWithdrawRequests = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-10 w-32" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-32 w-full" />
-          ))}
-        </div>
-        <div className="bg-white rounded-xl border shadow-sm p-6">
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-center space-x-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-[200px]" />
-                  <Skeleton className="h-3 w-[300px]" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
   const formatDateTime = (dateString: string) => {
     return new Date(dateString).toLocaleString("en-US", {
       year: "numeric",
@@ -89,69 +61,73 @@ const AllWithdrawRequests = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Wallet className="h-7 w-7 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
+            <Wallet className="h-7 w-7 text-bprimary" />
             Withdrawal Requests
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage lawyer withdrawal requests and payments
+            Manage lawyer withdrawal requests and payouts
           </p>
         </div>
       </div>
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
-              <TableRow className="bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-150 border-b-2 border-gray-200">
-                <TableHead className="font-semibold text-gray-700 py-4">
+              <TableRow className="bg-gray-50/75 border-b border-gray-100">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Wallet className="h-4 w-4" />
+                    <Wallet className="h-4 w-4 text-gray-400" />
                     Lawyer Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4" />
+                    <DollarSign className="h-4 w-4 text-gray-400" />
                     Amount
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-4 w-4 text-gray-400" />
                     Applied At
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700">
+                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4" />
+                    <TrendingUp className="h-4 w-4 text-gray-400" />
                     Status
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-700 text-center">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {withdraws?.data?.length > 0 ? (
+              {isLoading ? (
+                <>
+                  <NoData isLoading={isLoading} isFetching={isFetching} title="Withdraw Requests" />
+                </>
+              ) : withdraws?.data?.length > 0 ? (
                 <>
                   {withdraws?.data?.map((withdraw: any) => (
                     <TableRow
                       key={withdraw._id}
-                      className="hover:bg-blue-50/50 transition-colors border-b border-gray-100"
+                      className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
                     >
                       <TableCell className="py-4">
                         <div className="flex items-center space-x-3">
-                          <Avatar className="h-11 w-11 border-2 border-gray-200 shadow-sm">
+                          <Avatar className="h-11 w-11 border border-gray-100 shadow-sm transition-transform duration-200 hover:scale-105">
                             <AvatarImage
                               src={
                                 withdraw?.lawyerId?.profileImage ||
@@ -159,31 +135,31 @@ const AllWithdrawRequests = () => {
                               }
                               alt={withdraw?.lawyerId?.fullName}
                             />
-                            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+                            <AvatarFallback className="bg-gradient-to-br from-bprimary to-indigo-600 text-white font-semibold text-sm">
                               {withdraw?.lawyerId?.fullName
                                 ?.charAt(0)
                                 ?.toUpperCase() || "L"}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-semibold text-gray-900">
+                            <p className="font-semibold text-gray-900 leading-tight">
                               {withdraw?.lawyerId?.fullName}
-                            </p>                            
+                            </p>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-600 font-medium">
                           {withdraw?.lawyerId?.email}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-semibold text-green-600 text-base">
+                        <span className="font-semibold text-emerald-600 text-base">
                           ${withdraw?.amount?.toFixed(2)}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-600">
                           {formatDateTime(withdraw?.createdAt)}
                         </span>
                       </TableCell>
@@ -194,11 +170,10 @@ const AllWithdrawRequests = () => {
                               ? "default"
                               : "secondary"
                           }
-                          className={`font-semibold ${
-                            withdraw.status === "Accepted"
-                              ? "bg-green-100 text-green-700 hover:bg-green-100"
-                              : "bg-yellow-100 text-yellow-700 hover:bg-yellow-100"
-                          }`}
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${withdraw.status === "Accepted"
+                              ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100/80"
+                              : "bg-amber-50 text-amber-700 hover:bg-amber-100/80"
+                            }`}
                         >
                           {withdraw.status === "Accepted" ? (
                             <CheckCircle className="h-3 w-3 mr-1" />
@@ -213,16 +188,16 @@ const AllWithdrawRequests = () => {
                           <button
                             disabled={withdraw.status === "Accepted"}
                             onClick={() => handleAcceptRequest(withdraw?._id)}
-                            className="flex items-center gap-1 bg-green-50 hover:bg-green-100 text-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium py-2 px-4 rounded-lg transition-colors"
+                            className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs uppercase tracking-wider transition-colors cursor-pointer"
                           >
-                            <CheckCircle className="h-4 w-4" />
+                            <CheckCircle className="h-3.5 w-3.5" />
                             Accept
                           </button>
                           <button
                             disabled={withdraw.status === "Accepted"}
-                            className="flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-600 disabled:opacity-50 disabled:cursor-not-allowed font-medium py-2 px-4 rounded-lg transition-colors"
+                            className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs uppercase tracking-wider transition-colors cursor-pointer"
                           >
-                            <XCircle className="h-4 w-4" />
+                            <XCircle className="h-3.5 w-3.5" />
                             Reject
                           </button>
                         </div>
