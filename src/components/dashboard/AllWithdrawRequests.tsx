@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
-import { Skeleton } from "../ui/skeleton";
 import NoData from "../common/NoData";
 import {
   useAcceptRequestMutation,
@@ -25,14 +24,21 @@ import {
   XCircle,
   Clock,
   TrendingUp,
+  ChevronDown,
 } from "lucide-react";
+import { useState } from "react";
+import Pagination from "../common/Pagination";
 
 const AllWithdrawRequests = () => {
+  const [page, setPage] = useState(1);
+  const [status, setStatus] = useState("");
   const {
     data: withdraws,
     isLoading,
     isFetching,
-  } = useWithdrawRequestsQuery("");
+  } = useWithdrawRequestsQuery({ status, page });
+
+  const totalPage = withdraws?.data?.totalPages || 1;
 
   const [acceptRequest] = useAcceptRequestMutation();
 
@@ -61,18 +67,34 @@ const AllWithdrawRequests = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-            <Wallet className="h-7 w-7 text-bprimary" />
-            Withdrawal Requests
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Withdraw Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage lawyer withdrawal requests and payouts
+            Manage and view all registered withdraw requests in the platform
           </p>
         </div>
       </div>
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+      <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-lg font-semibold text-gray-900">
+            All Withdraw Requests
+          </h1>
+          <div className="relative inline-block">
+            <select
+              className="appearance-none border border-gray-300 rounded-lg py-2 pl-3 pr-9 text-sm font-medium text-gray-700 bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-colors cursor-pointer"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Pending">Pending</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
@@ -116,11 +138,15 @@ const AllWithdrawRequests = () => {
             <TableBody>
               {isLoading ? (
                 <>
-                  <NoData isLoading={isLoading} isFetching={isFetching} title="Withdraw Requests" />
+                  <NoData
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                    title="Withdraw Requests"
+                  />
                 </>
-              ) : withdraws?.data?.length > 0 ? (
+              ) : withdraws?.data?.data?.length > 0 ? (
                 <>
-                  {withdraws?.data?.map((withdraw: any) => (
+                  {withdraws?.data?.data?.map((withdraw: any) => (
                     <TableRow
                       key={withdraw._id}
                       className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
@@ -170,10 +196,11 @@ const AllWithdrawRequests = () => {
                               ? "default"
                               : "secondary"
                           }
-                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${withdraw.status === "Accepted"
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${
+                            withdraw.status === "Accepted"
                               ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100/80"
                               : "bg-amber-50 text-amber-700 hover:bg-amber-100/80"
-                            }`}
+                          }`}
                         >
                           {withdraw.status === "Accepted" ? (
                             <CheckCircle className="h-3 w-3 mr-1" />
@@ -219,6 +246,9 @@ const AllWithdrawRequests = () => {
             </TableBody>
           </Table>
         </div>
+        {withdraws?.data?.data?.length > 0 && (
+          <Pagination totalPage={totalPage} page={page} setPage={setPage} />
+        )}
       </div>
     </div>
   );

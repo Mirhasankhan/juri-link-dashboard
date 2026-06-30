@@ -10,7 +10,7 @@ interface SettingsSidebarProps {
 
 export function SettingsSidebar({ activeSection, setActiveSection }: SettingsSidebarProps) {
   const navItems = [
-    // { id: "basic", label: "Basic" },
+    { id: "basic", label: "Basic" },
     { id: "account", label: "Account" },
     { id: "notifications", label: "Notifications" },
   ]

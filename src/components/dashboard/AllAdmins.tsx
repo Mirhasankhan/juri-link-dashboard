@@ -35,9 +35,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import Pagination from "../common/Pagination";
 
 const AllAdmins = () => {
-  const { data: admins, isLoading, isFetching } = useAllAdminsQuery("");
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const {
+    data: admins,
+    isLoading,
+    isFetching,
+  } = useAllAdminsQuery({ search, page });
+
+  const totalPage = admins?.data?.totalPages || 1;
+
   const [deleteAdmin] = useDeleteAdminMutation();
 
   const handleDeleteAdmin = async (adminId: string) => {
@@ -61,21 +72,30 @@ const AllAdmins = () => {
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-            <Shield className="h-7 w-7 text-bprimary" />
-            Admin Management
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage and monitor system administrators and credentials
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+              Admin Management
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Manage and view all registered admins in the platform
+            </p>
+          </div>
         </div>
         <CreateAdminModal />
       </div>
-    
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+      <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-lg font-semibold text-gray-900">All Admins</h1>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-bprimary focus:border-bprimary"
+            placeholder="Search admins..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
@@ -112,12 +132,16 @@ const AllAdmins = () => {
 
             <TableBody>
               {isLoading ? (
-                 <>
-                 <NoData isLoading={isLoading} isFetching={isFetching} title="Admins"/>
-                </>
-              ) : admins?.data?.length > 0 ? (
                 <>
-                  {admins?.data?.map((admin: any, index: number) => (
+                  <NoData
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                    title="Admins"
+                  />
+                </>
+              ) : admins?.data?.data?.length > 0 ? (
+                <>
+                  {admins?.data?.data?.map((admin: any, index: number) => (
                     <TableRow
                       key={admin._id}
                       className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
@@ -227,6 +251,9 @@ const AllAdmins = () => {
             </TableBody>
           </Table>
         </div>
+        {admins?.data?.data?.length > 0 && (
+          <Pagination totalPage={totalPage} page={page} setPage={setPage} />
+        )}
       </div>
     </div>
   );

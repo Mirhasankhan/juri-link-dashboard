@@ -3,15 +3,15 @@ import baseApi from "@/redux/api/baseApi";
 const useApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     allUsers: builder.query({
-      query: () => ({
-        url: `/admin/all-users`,
+      query: ({ search ,page}) => ({
+        url: `/admin/all-users?search=${search}&page=${page}`,
         method: "GET",
       }),
       providesTags: ["User"],
     }),
     allLawyers: builder.query({
-      query: () => ({
-        url: `/admin/all-lawyers`,
+      query: ({search, page}) => ({
+        url: `/admin/all-lawyers?search=${search}&page=${page}`,
         method: "GET",
       }),
       providesTags: ["User"],
@@ -39,8 +39,8 @@ const useApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
     allAdmins: builder.query({
-      query: () => ({
-        url: `/admin/all`,
+      query: ({search, page}) => ({
+        url: `/admin/all?search=${search}&page=${page}`,
         method: "GET",
       }),
       providesTags: ["User"],

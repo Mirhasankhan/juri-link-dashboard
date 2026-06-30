@@ -12,29 +12,57 @@ import NoData from "../common/NoData";
 import { useReportsQuery } from "@/redux/features/report/report.api";
 import Image from "next/image";
 import RespondToReportModal from "./modal/ReportResponseModal";
-import { AlertTriangle } from "lucide-react";
-
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import Pagination from "../common/Pagination";
 
 const AllReports = () => {
-  const { data: reports, isLoading, isFetching } = useReportsQuery("");
- 
+  const [page, setPage] = useState(1);
+  const [status, setStatus] = useState("");
+
+  const {
+    data: reports,
+    isLoading,
+    isFetching,
+  } = useReportsQuery({ status, page });
+
+  const totalPage = reports?.data?.totalPages || 1;
+
   return (
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-            <AlertTriangle className="h-7 w-7 text-red-500" />
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
             Report Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Review and resolve complaints and disputes submitted by users
+            Manage and view all registered reports in the platform
           </p>
         </div>
       </div>
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+      <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-lg font-semibold text-gray-900">All Reports</h1>
+          <div className="relative inline-block">
+            <select
+              className="appearance-none border border-gray-300 rounded-lg py-2 pl-3 pr-9 text-sm font-medium text-gray-700 bg-white hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-colors cursor-pointer"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">All</option>
+
+              <option value="Pending">Pending</option>
+              <option value="Got_Refund">Got Refund</option>
+              <option value="Lawyer_Punished">Lawyer Punished</option>
+              <option value="False_Claim">False Claim</option>
+            </select>
+
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
@@ -69,11 +97,15 @@ const AllReports = () => {
             <TableBody>
               {isLoading ? (
                 <>
-                 <NoData isLoading={isLoading} isFetching={isFetching} title="Reports"/>
+                  <NoData
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                    title="Reports"
+                  />
                 </>
-              ) : reports?.data?.length > 0 ? (
+              ) : reports?.data?.data?.length > 0 ? (
                 <>
-                  {reports?.data?.map((report: any) => (
+                  {reports?.data?.data?.map((report: any) => (
                     <TableRow
                       key={report._id}
                       className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
@@ -89,7 +121,9 @@ const AllReports = () => {
                               alt={report?.bookingId?.userId?.fullName}
                             />
                             <AvatarFallback className="bg-gradient-to-br from-bprimary to-indigo-600 text-white font-semibold text-xs">
-                              {report?.bookingId?.userId?.fullName?.charAt(0)?.toUpperCase() || "U"}
+                              {report?.bookingId?.userId?.fullName
+                                ?.charAt(0)
+                                ?.toUpperCase() || "U"}
                             </AvatarFallback>
                           </Avatar>
                           <span className="font-semibold text-gray-950">
@@ -108,7 +142,9 @@ const AllReports = () => {
                               alt={report?.bookingId?.lawyerId?.fullName}
                             />
                             <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-indigo-700 text-white font-semibold text-xs">
-                              {report?.bookingId?.lawyerId?.fullName?.charAt(0)?.toUpperCase() || "E"}
+                              {report?.bookingId?.lawyerId?.fullName
+                                ?.charAt(0)
+                                ?.toUpperCase() || "E"}
                             </AvatarFallback>
                           </Avatar>
                           <span className="font-semibold text-gray-950">
@@ -122,7 +158,10 @@ const AllReports = () => {
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-600 max-w-[200px] truncate block" title={report?.comment}>
+                        <span
+                          className="text-sm text-gray-600 max-w-[200px] truncate block"
+                          title={report?.comment}
+                        >
                           {report?.comment}
                         </span>
                       </TableCell>
@@ -138,7 +177,9 @@ const AllReports = () => {
                             />
                           </div>
                         ) : (
-                          <span className="text-xs text-gray-400 font-medium italic">No media</span>
+                          <span className="text-xs text-gray-400 font-medium italic">
+                            No media
+                          </span>
                         )}
                       </TableCell>
                       <TableCell>
@@ -147,19 +188,27 @@ const AllReports = () => {
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border-none transition-all duration-200 ${
-                          report?.status === "Pending"
-                            ? "bg-amber-50 text-amber-700"
-                            : "bg-emerald-50 text-emerald-700"
-                        }`}>
+                        <span
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border-none transition-all duration-200 ${
+                            report?.status === "Pending"
+                              ? "bg-amber-50 text-amber-700"
+                              : "bg-emerald-50 text-emerald-700"
+                          }`}
+                        >
                           {report?.status}
                         </span>
                       </TableCell>
                       <TableCell>
                         {report?.status === "Pending" ? (
-                          <RespondToReportModal type={report.reportType} reportId={report._id} />
+                          <RespondToReportModal
+                            type={report.reportType}
+                            reportId={report._id}
+                          />
                         ) : (
-                          <span className="text-sm text-gray-600 font-medium max-w-[150px] truncate block" title={report.adminReply}>
+                          <span
+                            className="text-sm text-gray-600 font-medium max-w-[150px] truncate block"
+                            title={report.adminReply}
+                          >
                             {report.adminReply}
                           </span>
                         )}
@@ -181,6 +230,9 @@ const AllReports = () => {
             </TableBody>
           </Table>
         </div>
+        {reports?.data?.data?.length > 0 && (
+          <Pagination totalPage={totalPage} page={page} setPage={setPage} />
+        )}
       </div>
     </div>
   );

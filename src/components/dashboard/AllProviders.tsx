@@ -23,29 +23,45 @@ import {
   ShoppingBag,
   DollarSign,
 } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
+import { useState } from "react";
+import Pagination from "../common/Pagination";
 
 const AllLawyers = () => {
-  const { data: users, isLoading, isFetching } = useAllLawyersQuery("");
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const {
+    data: users,
+    isLoading,
+    isFetching,
+  } = useAllLawyersQuery({ search, page });
+
+  const totalPage = users?.data?.totalPages || 1;
 
   return (
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-            <Briefcase className="h-7 w-7 text-bprimary" />
-            All Lawyers
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Provider Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage and view all registered lawyers in the platform
+            Manage and view all registered providers in the platform
           </p>
-        </div>       
+        </div>
       </div>
 
-
       {/* Table Section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+      <div className="bg-white rounded-xl border p-5 border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-lg font-semibold text-gray-900">All Providers</h1>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-bprimary focus:border-bprimary"
+            placeholder="Search providers..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         <div className="overflow-x-auto">
           <Table className="min-w-[900px]">
             <TableHeader>
@@ -104,11 +120,15 @@ const AllLawyers = () => {
             <TableBody>
               {isLoading ? (
                 <>
-                 <NoData isLoading={isLoading} isFetching={isFetching} title="Providers"/>
+                  <NoData
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                    title="Providers"
+                  />
                 </>
-              ) : users?.data?.length > 0 ? (
+              ) : users?.data?.data?.length > 0 ? (
                 <>
-                  {users?.data?.map((user: any, index: number) => (
+                  {users?.data?.data?.map((user: any, index: number) => (
                     <TableRow
                       key={user._id}
                       className="hover:bg-indigo-50/15 active:bg-indigo-50/30 transition-colors border-b border-gray-100 last:border-0"
@@ -150,7 +170,10 @@ const AllLawyers = () => {
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm text-gray-600 max-w-[150px] truncate block" title={user?.location}>
+                        <span
+                          className="text-sm text-gray-600 max-w-[150px] truncate block"
+                          title={user?.location}
+                        >
                           {user?.location || (
                             <span className="text-gray-300">—</span>
                           )}
@@ -208,6 +231,9 @@ const AllLawyers = () => {
             </TableBody>
           </Table>
         </div>
+        {users?.data?.data?.length > 0 && (
+          <Pagination totalPage={totalPage} page={page} setPage={setPage} />
+        )}
       </div>
     </div>
   );

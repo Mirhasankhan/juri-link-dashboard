@@ -3,8 +3,8 @@ import baseApi from "@/redux/api/baseApi";
 const reportApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     reports: builder.query({
-      query: (status) => ({
-        url: `/admin/reports?status=${status}`,
+      query: ({status, page}) => ({
+        url: `/admin/reports?status=${status}&page=${page}`,
         method: "GET",
       }),
       providesTags: ["report"],

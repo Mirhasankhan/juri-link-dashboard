@@ -15,14 +15,13 @@ const AllServices = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 tracking-tight">
-            <Briefcase className="h-7 w-7 text-bprimary" />
-            Legal Services
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Service Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Comprehensive legal services available on the platform
+            Manage and view all registered services in the platform
           </p>
-        </div>       
+        </div>
       </div>
 
       {/* Services Grid */}
@@ -71,7 +70,7 @@ const AllServices = () => {
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-lg font-bold text-gray-900 line-clamp-1 leading-snug">
                     {service.serviceName}
-                  </h3>                 
+                  </h3>
                 </div>
 
                 <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">

@@ -3,8 +3,8 @@ import baseApi from "@/redux/api/baseApi";
 const withdrawApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     withdrawRequests: builder.query({
-      query: () => ({
-        url: "/admin/withdraw-requests",
+      query: ({status,page}) => ({
+        url: `/admin/withdraw-requests?status=${status}&page=${page}`,
         method: "GET",
       }),
       providesTags: ["withdraw"],

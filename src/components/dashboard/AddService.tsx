@@ -54,7 +54,7 @@ const AddService = () => {
       {!isFormVisible && (
         <button
           onClick={() => setIsFormVisible(true)}
-          className="px-4 py-2 bg-bprimary text-white rounded mb-4"
+          className="px-4 py-2 cursor-pointer bg-bprimary text-white rounded mb-4"
         >
           Add New Service
         </button>

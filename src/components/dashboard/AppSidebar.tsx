@@ -26,7 +26,7 @@ import {
   LogOut,
   Settings,
   ListMinus,
-  CircleDollarSign,
+  // CircleDollarSign,
   UserCog,
 } from "lucide-react";
 import { FaWallet } from "react-icons/fa";
@@ -45,11 +45,11 @@ const menuItems = [
   { title: "Admin & Role", icon: UserCog, href: "/dashboard/admin-management" },
   { title: "Withdraws", icon: FaWallet, href: "/dashboard/withdraws" },
   { title: "Reports", icon: MdBugReport, href: "/dashboard/reports" },
-  {
-    title: "Earning Overview",
-    icon: CircleDollarSign,
-    href: "/dashboard/transfer",
-  },
+  // {
+  //   title: "Earning Overview",
+  //   icon: CircleDollarSign,
+  //   href: "/dashboard/transfer",
+  // },
   // { title: "Help Center", icon: HelpCircle, href: "/dashboard/help" },
   // { title: "Message", icon: MessageCircle, href: "/dashboard/messages" },
   { title: "Settings", icon: Settings, href: "/dashboard/settings" },
@@ -67,8 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       localStorage.removeItem("persist:auth");
       // Optional: Clear sessionStorage if needed
       sessionStorage.clear();
-      router.push("/login");
-      console.log("came here"); // Redirect to the home page
+      router.push("/login");    
       // window.location.reload()
 
       toast.success("Logout successful");
