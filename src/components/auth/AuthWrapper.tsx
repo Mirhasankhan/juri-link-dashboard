@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { ReactNode } from "react";
 // import luxuryHotel from "@/assets/image/luxuryHotel2.png";
-import login from '@/assets/authImage/loginpre.png'
+import login from '@/assets/logo/logo2.avif'
 import registration from '@/assets/authImage/registration.png'
 import { usePathname } from 'next/navigation';
 // import Link from "next/link";
@@ -14,8 +14,8 @@ export default function AuthWrapper({ children }: { children: ReactNode }) {
   const pathName = usePathname();
 
   return (
-    <div className="p-4">
-      <main className="flex min-h-[95vh] flex-col md:flex-row">
+    <div className="">
+      <main className="flex min-h-[100vh] flex-col md:flex-row">
         {pathName === "/login" || pathName === "/register" ? (
           <>
             <div className="relative hidden flex-1 md:block">
@@ -24,7 +24,7 @@ export default function AuthWrapper({ children }: { children: ReactNode }) {
                 alt="Luxury-hotel"
                 fill
                 priority
-                className="object-cover rounded-[12px]"
+                className="object-cover"
               />
             </div>
             <div className="flex flex-1 flex-col justify-center px-6 md:px-12 lg:px-16 xl:px-20">

@@ -38,7 +38,7 @@ const menuItems = [
   { title: "User Management", icon: Users, href: "/dashboard/users" },
   { title: "Service Management", icon: ListMinus, href: "/dashboard/services" },
   {
-    title: "Provider Management",
+    title: "Lawyer Management",
     icon: UserCheck,
     href: "/dashboard/providers",
   },

@@ -43,10 +43,10 @@ const AllLawyers = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-            Provider Management
+            Lawyer Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage and view all registered providers in the platform
+            Manage and view all registered lawyers in the platform
           </p>
         </div>
       </div>
@@ -54,11 +54,11 @@ const AllLawyers = () => {
       {/* Table Section */}
       <div className="bg-white rounded-xl border p-5 border-gray-100 shadow-sm overflow-hidden transition-shadow hover:shadow-md duration-300">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-lg font-semibold text-gray-900">All Providers</h1>
+          <h1 className="text-lg font-semibold text-gray-900">All Lawyers</h1>
           <input
             type="text"
             className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-bprimary focus:border-bprimary"
-            placeholder="Search providers..."
+            placeholder="Search lawyers..."
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>

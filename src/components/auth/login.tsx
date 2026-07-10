@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useId, useState } from "react";
@@ -71,7 +70,7 @@ export default function LoginForm() {
                 role: decodeToken.role,
                 id: decodeToken.id.toString(),
               },
-            })
+            }),
           );
         }
         Cookies.set("token", accessToken, {
@@ -105,8 +104,8 @@ export default function LoginForm() {
           <div className="">
             <Image
               src={mainLogo}
-              width={80}
-              height={80}
+              width={120}
+              height={120}
               className="w-full h-full object-cover"
               alt="mainlog"
             />
@@ -208,6 +207,11 @@ export default function LoginForm() {
           >
             {isLoading ? "Signing In..." : "Sign In"}
           </Button>
+
+          <div>
+            <h1>Admin Email:    admin@gmail.com</h1>
+            <h1>Admin Password:   123456</h1>
+          </div>
 
           <div className="text-center text-sm cursor-pointer mt-20">
             <span className="text-[#2D2D2D]">
