@@ -8,7 +8,8 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 
 const AllServices = () => {
-  const { data: services, isLoading } = useServicesQuery("");
+  const { data: services, isLoading, isFetching } = useServicesQuery("");
+  const showSkeleton = isLoading || isFetching;
 
   return (
     <div className="space-y-6 mt-4">
@@ -26,20 +27,33 @@ const AllServices = () => {
 
       {/* Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {isLoading ? (
+        {showSkeleton ? (
           <>
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 space-y-4 animate-pulse"
+                className="bg-white rounded-xl border border-gray-100/80 shadow-sm overflow-hidden"
               >
-                <Skeleton className="h-48 w-full rounded-lg bg-gray-150" />
-                <div className="space-y-2">
-                  <Skeleton className="h-6 w-3/4 bg-gray-150" />
-                  <Skeleton className="h-4 w-full bg-gray-150" />
-                  <Skeleton className="h-4 w-2/3 bg-gray-150" />
+                {/* Image skeleton with badge placeholder, mirrors the real card */}
+                <div className="relative h-48 w-full bg-gray-100">
+                  <Skeleton className="h-full w-full rounded-none bg-gray-150" />
+                  <div className="absolute top-3 right-3">
+                    <Skeleton className="h-6 w-20 rounded-full bg-gray-200/80" />
+                  </div>
                 </div>
-                <Skeleton className="h-10 w-full rounded-lg bg-gray-150 mt-2" />
+
+                {/* Content skeleton */}
+                <div className="p-5 space-y-3">
+                  <Skeleton className="h-5 w-3/4 rounded-md bg-gray-150" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-3.5 w-full rounded bg-gray-150" />
+                    <Skeleton className="h-3.5 w-full rounded bg-gray-150" />
+                    <Skeleton className="h-3.5 w-2/3 rounded bg-gray-150" />
+                  </div>
+                  <div className="pt-2">
+                    <Skeleton className="h-10 w-full rounded-lg bg-gray-150" />
+                  </div>
+                </div>
               </div>
             ))}
           </>
