@@ -4,8 +4,7 @@ import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,12 +16,13 @@ import { setUser } from "@/redux/features/authSlice/authSlice";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import mainLogo from "@/assets/logo/logo2.png";
+import mainLogo from "@/assets/logo/logo3.avif";
+
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" }), // Changed from 4 to 8 to match error message
+    .min(6, { message: "Password must be at least 6 characters" }),
 });
 
 interface DecodedToken {
@@ -35,6 +35,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -96,145 +98,169 @@ export default function LoginForm() {
     <AnimationWrapper
       animation="fade-right"
       delay={0.1}
-      className="mx-auto w-full max-w-[650px]"
+      className="w-full max-w-[460px]"
     >
-      <div className="flex flex-col items-start space-y-8">
-        {/* Logo */}
-        <Link href={"/"} className="mb-14">
-          <div className="">
-            <Image
-              src={mainLogo}
-              width={120}
-              height={120}
-              className="w-full h-full object-cover"
-              alt="mainlog"
-            />
-          </div>
-        </Link>
+      <div className="flex flex-col w-full">
+        {/* Mobile logo — hidden on large screens (shown in AuthWrapper on large) */}
+        <div className="flex lg:hidden items-center gap-2 mb-8">
+          <Image
+            src={mainLogo}
+            width={36}
+            height={36}
+            className="object-contain"
+            alt="Juri Link logo"
+          />
+          <span className="text-[#1a4a62] font-bold text-lg tracking-wide">
+            Juri Link
+          </span>
+        </div>
 
-        {/* Heading */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Login</h1>
-          <p className="text-gray-600">
-            Let&apos;s login into your account first
+        {/* Header */}
+        <div className="mb-8 space-y-1.5">
+          <div className="inline-flex items-center gap-2 bg-[#2e7999]/10 text-[#2e7999] text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2e7999] animate-pulse" />
+            Secure Login Portal
+          </div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            Welcome back 👋
+          </h1>
+          <p className="text-gray-500 text-sm">
+            Sign in to your Juri Link dashboard to continue.
           </p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
-          <div className="space-y-4">
-            {/* Email field */}
-            <div className="space-y-2">
-              <div className="group relative">
-                <label
-                  htmlFor={emailId}
-                  className="origin-start text-muted-foreground/70 group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:text-foreground absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium"
-                >
-                  <span className="bg-background inline-flex px-2">Email</span>
-                </label>
-                <Input
-                  id={emailId}
-                  type="email"
-                  placeholder=""
-                  className="w-full border-2 rounded-[32px] py-6 border-gray-200 placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-semibold"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="text-sm text-red-500 mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-            </div>
+        {/* Demo credentials card */}
+        <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">
+            Demo Credentials
+          </p>
+          <div className="grid grid-cols-2 gap-2 text-xs text-amber-800">
+            <span className="font-medium">Email:</span>
+            <span className="font-mono">admin@gmail.com</span>
+            <span className="font-medium">Password:</span>
+            <span className="font-mono">123456</span>
+          </div>
+        </div>
 
-            {/* Password field */}
-            <div className="space-y-2">
-              <div className="group relative">
-                <label
-                  htmlFor={passwordId}
-                  className="origin-start text-muted-foreground/70 group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:text-foreground absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium"
-                >
-                  <span className="bg-background inline-flex px-2">
-                    Password
-                  </span>
-                </label>
-                <div className="relative">
-                  <Input
-                    id={passwordId}
-                    type={showPassword ? "text" : "password"}
-                    placeholder=" "
-                    className="w-full py-6 placeholder:text-gray-400 border-2 rounded-[32px] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-semibold pr-10"
-                    {...register("password")}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
-                    ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
-                    )}
-                  </Button>
-                </div>
-                {errors.password && (
-                  <p className="text-sm text-red-500 mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-5">
+          {/* Email field */}
+          <div className="space-y-1.5">
+            <label
+              htmlFor={emailId}
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Email Address
+            </label>
+            <div
+              className={`relative flex items-center transition-all duration-200 rounded-2xl border-2 bg-white shadow-sm
+                ${focusedField === "email" ? "border-[#2e7999] shadow-[0_0_0_3px_rgba(46,121,153,0.12)]" : "border-gray-200"}
+                ${errors.email ? "border-red-400 shadow-[0_0_0_3px_rgba(248,113,113,0.15)]" : ""}
+              `}
+            >
+              <Mail
+                className={`absolute left-4 w-4 h-4 transition-colors duration-200 ${focusedField === "email" ? "text-[#2e7999]" : "text-gray-400"}`}
+              />
+              <Input
+                id={emailId}
+                type="email"
+                placeholder="you@example.com"
+                className="pl-11 pr-4 py-3 h-12 border-0 bg-transparent ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none rounded-2xl text-gray-800 placeholder:text-gray-400 font-medium text-sm"
+                {...register("email")}
+                onFocus={() => setFocusedField("email")}
+                onBlur={() => setFocusedField(null)}
+              />
             </div>
+            {errors.email && (
+              <p className="text-xs text-red-500 flex items-center gap-1 ml-1">
+                <span>⚠</span> {errors.email.message}
+              </p>
+            )}
           </div>
 
-          {/* Remember me and Forgot password */}
-          {/* <div className="flex items-center justify-end">
-            <Link
-              href="/forgot-password"
-              className="text-sm text-bsecondary hover:text-bsecondary/80 font-semibold hover:underline"
+          {/* Password field */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor={passwordId}
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Password
+              </label>
+              {/* Uncomment if you restore forgot password */}
+              {/* <Link href="/forgot-password" className="text-xs text-[#2e7999] hover:underline font-medium">
+                Forgot password?
+              </Link> */}
+            </div>
+            <div
+              className={`relative flex items-center transition-all duration-200 rounded-2xl border-2 bg-white shadow-sm
+                ${focusedField === "password" ? "border-[#2e7999] shadow-[0_0_0_3px_rgba(46,121,153,0.12)]" : "border-gray-200"}
+                ${errors.password ? "border-red-400 shadow-[0_0_0_3px_rgba(248,113,113,0.15)]" : ""}
+              `}
             >
-              Forgot Password
-            </Link>
-          </div> */}
+              <Lock
+                className={`absolute left-4 w-4 h-4 transition-colors duration-200 ${focusedField === "password" ? "text-[#2e7999]" : "text-gray-400"}`}
+              />
+              <Input
+                id={passwordId}
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="pl-11 pr-12 py-3 h-12 border-0 bg-transparent ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none rounded-2xl text-gray-800 placeholder:text-gray-400 font-medium text-sm"
+                {...register("password")}
+                onFocus={() => setFocusedField("password")}
+                onBlur={() => setFocusedField(null)}
+              />
+              <button
+                type="button"
+                className="absolute right-4 text-gray-400 hover:text-[#2e7999] transition-colors duration-150 focus:outline-none"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+            {errors.password && (
+              <p className="text-xs text-red-500 flex items-center gap-1 ml-1">
+                <span>⚠</span> {errors.password.message}
+              </p>
+            )}
+          </div>
 
           {/* Sign in button */}
           <Button
             type="submit"
+            id="login-submit-btn"
             disabled={isLoading}
-            className="w-full h-12 bg-bprimary hover:bg-bprimary/80 text-white font-medium rounded-[32px]"
+            className="w-full h-12 rounded-2xl font-semibold text-sm tracking-wide text-white
+              bg-gradient-to-r from-[#2e7999] to-[#1a5f7a]
+              hover:from-[#1a5f7a] hover:to-[#134e66]
+              disabled:opacity-60 disabled:cursor-not-allowed
+              shadow-md hover:shadow-lg transition-all duration-200
+              flex items-center justify-center gap-2 group"
           >
-            {isLoading ? "Signing In..." : "Sign In"}
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Signing In…
+              </>
+            ) : (
+              <>
+                Sign In
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-150" />
+              </>
+            )}
           </Button>
-
-          <div>
-            <h1>Admin Email:    admin@gmail.com</h1>
-            <h1>Admin Password:   123456</h1>
-          </div>
-
-          <div className="text-center text-sm cursor-pointer mt-20">
-            <span className="text-[#2D2D2D]">
-              © {new Date().getFullYear()} Juri Link. All rights reserved.
-            </span>
-            {/* <span className="text-bprimary hover:underline font-semibold ml-3">
-              Term & Condition
-            </span>
-            <span className="text-bprimary hover:underline font-semibold border-l border-[#D1D6DB] pl-4 ml-4">
-              Privacy & Policy
-            </span> */}
-          </div>
-
-          {/* <div className="text-center text-sm text-slate-600">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/register"
-              className="font-semibold text-slate-900 hover:underline"
-            >
-              Sign Up
-            </Link>
-          </div> */}
         </form>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-gray-400 mt-8">
+          © {new Date().getFullYear()} Juri Link. All rights reserved.
+        </p>
       </div>
     </AnimationWrapper>
   );
