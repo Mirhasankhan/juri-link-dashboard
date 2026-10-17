@@ -39,24 +39,24 @@ ChartJS.register(
 export default function SellingService() {
   const [services] = useState<Service[]>([
     {
-      name: "Electrical Services",
-      category: "Handyman",
+      name: "Family Law Consultation",
+      category: "Family Law",
       times: 30,
       revenue: 8000,
       image: menImg.src,
     },
     {
-      name: "Massage Services",
-      category: "Spa & wellness",
+      name: "Criminal Defense",
+      category: "Criminal Law",
       times: 40,
-      revenue: 1250,
+      revenue: 6250,
       image: menImg.src,
     },
     {
-      name: "Bedroom Washing",
-      category: "Home Cleaning",
+      name: "Business Contract Review",
+      category: "Corporate Law",
       times: 20,
-      revenue: 254,
+      revenue: 4250,
       image: menImg.src,
     },
   ]);
