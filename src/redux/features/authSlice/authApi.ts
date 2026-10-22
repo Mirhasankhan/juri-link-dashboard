@@ -19,14 +19,14 @@ export const authApi = baseApi.injectEndpoints({
    
     sendOtp: builder.mutation({
       query: (email) => ({
-        url: "/auth/forgot-password",
+        url: "/auth/send-otp",
         method: "POST",
         body: email,
       }),
     }),
     getMe: builder.query({
       query: () => ({
-        url: "/users/me",
+        url: "/admin/me",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -39,10 +39,11 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     resetPassword: builder.mutation({
-      query: (data: { password: string }) => ({
+      query: (data: { password?: string; newPassword?: string; token?: string }) => ({
         url: "/auth/reset-password",
-        method: "POST",
-        body: data,
+        method: "PATCH",
+        body: { newPassword: data.newPassword || data.password },
+        headers: data.token ? { Authorization: data.token } : undefined,
       }),
     }),
     updateUser: builder.mutation({

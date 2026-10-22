@@ -2,11 +2,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import Cookies from "js-cookie";
 
-if (!baseUrl) {
-  throw new Error("Environment variable NEXT_PUBLIC_BASE_URL is not set");
-}
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  "https://api.passit.smtsigma.com/api/v1";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
@@ -14,11 +14,14 @@ export const baseApi = createApi({
     baseUrl: baseUrl,
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
-      const token = state.auth.accessToken;
-     
+      let token = state.auth?.accessToken;
 
-      if (token) {
-        headers.set("Authorization", `${token}`);
+      if (!token && typeof window !== "undefined") {
+        token = Cookies.get("token") || "";
+      }
+
+      if (token && token !== "null" && token !== "undefined") {
+        headers.set("Authorization", `Bearer ${token}`);
       }
 
       return headers;
