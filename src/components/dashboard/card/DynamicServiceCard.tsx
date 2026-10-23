@@ -40,11 +40,11 @@ const DynamicServiceCard = ({ services }: DynamicServiceCardProps) => {
       <div className="px-6 pb-6">
         {/* Table Header */}
         <div className="grid grid-cols-12 gap-4 pt-4 pb-2 border-b border-gray-50">
-          <span className="col-span-1 text-xs font-semibold text-gray-400 uppercase tracking-widest">#</span>
-          <span className="col-span-5 text-xs font-semibold text-gray-400 uppercase tracking-widest">Service</span>
-          <span className="col-span-2 text-xs font-semibold text-gray-400 uppercase tracking-widest">Category</span>
-          <span className="col-span-2 text-xs font-semibold text-gray-400 uppercase tracking-widest text-center">Times</span>
-          <span className="col-span-2 text-xs font-semibold text-gray-400 uppercase tracking-widest text-right">Revenue</span>
+          <span className="col-span-1 text-xs font-semibold text-gray-400  tracking-widest">#</span>
+          <span className="col-span-5 text-xs font-semibold text-gray-400  tracking-widest">Service</span>
+          <span className="col-span-2 text-xs font-semibold text-gray-400  tracking-widest">Category</span>
+          <span className="col-span-2 text-xs font-semibold text-gray-400  tracking-widest text-center">Times</span>
+          <span className="col-span-2 text-xs font-semibold text-gray-400  tracking-widest text-right">Revenue</span>
         </div>
 
         {/* Rows */}

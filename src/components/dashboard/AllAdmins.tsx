@@ -100,31 +100,31 @@ const AllAdmins = () => {
           <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow className="bg-gray-50/75 border-b border-gray-100">
-                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4 text-gray-400" />
                     Admin Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <UserCog className="h-4 w-4 text-gray-400" />
                     Assigned Role
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-gray-400" />
                     Active From
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs  tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
@@ -183,11 +183,10 @@ const AllAdmins = () => {
                               ? "default"
                               : "secondary"
                           }
-                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${
-                            admin?.role === "UserAdmin"
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${admin?.role === "UserAdmin"
                               ? "bg-bprimary/10 text-bprimary hover:bg-bprimary/20"
                               : "bg-amber-50 text-amber-700 hover:bg-amber-100/80"
-                          }`}
+                            }`}
                         >
                           {admin?.role}
                         </Badge>
@@ -202,7 +201,7 @@ const AllAdmins = () => {
                           <AlertDialogTrigger asChild>
                             <button className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
                               <Trash className="h-4 w-4" />
-                              <span className="text-xs font-semibold uppercase tracking-wider">
+                              <span className="text-xs font-semibold  tracking-wider">
                                 Delete
                               </span>
                             </button>

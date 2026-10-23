@@ -74,16 +74,15 @@ const Dashboard = () => {
                   <Icon className="w-5 h-5 text-white" />
                 </div>
                 <span
-                  className={`flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${
-                    trendUp ? "bg-white/20 text-white" : "bg-red-400/30 text-red-100"
-                  }`}
+                  className={`flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${trendUp ? "bg-white/20 text-white" : "bg-red-400/30 text-red-100"
+                    }`}
                 >
                   <TrendingUp className="w-3 h-3" />
                   {trend}
                 </span>
               </div>
 
-              <p className="text-white/70 text-xs font-semibold tracking-widest uppercase mb-1">
+              <p className="text-white/70 text-xs font-semibold tracking-widest  mb-1">
                 {label}
               </p>
               <p className="text-3xl font-bold text-white leading-tight">

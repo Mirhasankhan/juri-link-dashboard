@@ -84,43 +84,43 @@ const AllUsers = () => {
           <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow className="bg-gray-50/75 border-b border-gray-100">
-                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4 text-gray-400" />
                     User Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-gray-400" />
                     Phone Number
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-gray-400" />
                     Address
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs  tracking-wider">
                   <div className="flex items-center justify-center gap-2">
                     <ShoppingBag className="h-4 w-4 text-gray-400" />
                     Bookings
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-right text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-right text-xs  tracking-wider">
                   <div className="flex items-center justify-end gap-2">
                     <DollarSign className="h-4 w-4 text-gray-400" />
                     Spending
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-right text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-right text-xs  tracking-wider">
                   <div className="flex items-center justify-end gap-2">
                     <DollarSign className="h-4 w-4 text-gray-400" />
                     Action
@@ -202,15 +202,14 @@ const AllUsers = () => {
                             variant={
                               user?.totalBookings > 0 ? "default" : "secondary"
                             }
-                            className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 ${
-                              user?.totalBookings > 0
+                            className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 ${user?.totalBookings > 0
                                 ? "bg-bprimary/10 text-bprimary hover:bg-bprimary/20 border-none"
                                 : "bg-gray-100 text-gray-500 hover:bg-gray-200/80 border-none"
-                            }`}
+                              }`}
                           >
                             {user?.totalBookings || 0}
                           </Badge>
-                        </TableCell>                     
+                        </TableCell>
                         <TableCell className="text-right">
                           <span className="font-semibold text-emerald-600">
                             ${user?.totalSpending?.toFixed(2) || "0.00"}
@@ -220,15 +219,13 @@ const AllUsers = () => {
                           <button
                             onClick={() => blockUnblockUser(user._id)}
                             disabled={isAnyLoading}
-                            className={`inline-flex items-center gap-1.5 min-w-[92px] justify-center px-3 py-1.5 rounded-md text-xs font-semibold border transition-all duration-200 ${
-                              isActive
+                            className={`inline-flex items-center gap-1.5 min-w-[92px] justify-center px-3 py-1.5 rounded-md text-xs font-semibold border transition-all duration-200 ${isActive
                                 ? "bg-red-50 text-red-700 border-red-200 hover:bg-red-100 hover:border-red-300"
                                 : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300"
-                            } ${
-                              isAnyLoading
+                              } ${isAnyLoading
                                 ? "opacity-50 cursor-not-allowed hover:bg-inherit"
                                 : "cursor-pointer"
-                            }`}
+                              }`}
                           >
                             {isRowLoading ? (
                               <>

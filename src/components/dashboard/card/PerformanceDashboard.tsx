@@ -21,7 +21,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-gray-100 rounded-xl shadow-lg px-4 py-3 min-w-[120px]">
-        <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-2">{label}</p>
+        <p className="text-xs text-gray-400 font-semibold  tracking-wide mb-2">{label}</p>
         {payload.map((entry: { name: string; value: number; color: string }, i: number) => (
           <div key={i} className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-1.5">
@@ -64,11 +64,10 @@ export default function PerformanceDashboard() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${
-                selectedRange === range
+              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${selectedRange === range
                   ? "bg-white text-gray-800 shadow-sm"
                   : "text-gray-400 hover:text-gray-600"
-              }`}
+                }`}
             >
               {range}
             </button>

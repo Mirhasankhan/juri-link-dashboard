@@ -131,7 +131,7 @@ export default function LoginForm() {
 
         {/* Demo credentials card */}
         <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
-          <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">
+          <p className="text-xs font-semibold text-amber-700  tracking-wider mb-2">
             Demo Credentials
           </p>
           <div className="grid grid-cols-2 gap-2 text-xs text-amber-800">

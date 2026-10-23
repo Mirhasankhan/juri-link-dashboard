@@ -99,37 +99,37 @@ const AllWithdrawRequests = () => {
           <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow className="bg-gray-50/75 border-b border-gray-100">
-                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Wallet className="h-4 w-4 text-gray-400" />
                     Lawyer Details
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-gray-400" />
                     Email
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <DollarSign className="h-4 w-4 text-gray-400" />
                     Amount
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-gray-400" />
                     Applied At
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   <div className="flex items-center gap-2">
                     <TrendingUp className="h-4 w-4 text-gray-400" />
                     Status
                   </div>
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-center text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-center text-xs  tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
@@ -196,11 +196,10 @@ const AllWithdrawRequests = () => {
                               ? "default"
                               : "secondary"
                           }
-                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${
-                            withdraw.status === "Accepted"
+                          className={`font-semibold rounded-full px-2.5 py-0.5 text-xs transition-all duration-200 border-none ${withdraw.status === "Accepted"
                               ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100/80"
                               : "bg-amber-50 text-amber-700 hover:bg-amber-100/80"
-                          }`}
+                            }`}
                         >
                           {withdraw.status === "Accepted" ? (
                             <CheckCircle className="h-3 w-3 mr-1" />
@@ -215,14 +214,14 @@ const AllWithdrawRequests = () => {
                           <button
                             disabled={withdraw.status === "Accepted"}
                             onClick={() => handleAcceptRequest(withdraw?._id)}
-                            className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                            className="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs  tracking-wider transition-colors cursor-pointer"
                           >
                             <CheckCircle className="h-3.5 w-3.5" />
                             Accept
                           </button>
                           <button
                             disabled={withdraw.status === "Accepted"}
-                            className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                            className="flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-600 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-1.5 px-3 rounded-lg text-xs  tracking-wider transition-colors cursor-pointer"
                           >
                             <XCircle className="h-3.5 w-3.5" />
                             Reject

@@ -67,28 +67,28 @@ const AllReports = () => {
           <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow className="bg-gray-50/75 border-b border-gray-100">
-                <TableHead className="font-semibold text-gray-600 py-4 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 py-4 text-xs  tracking-wider">
                   User Details
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Expert Details
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Service Type
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Claim
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   File
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Report Type
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Status
                 </TableHead>
-                <TableHead className="font-semibold text-gray-600 text-xs uppercase tracking-wider">
+                <TableHead className="font-semibold text-gray-600 text-xs  tracking-wider">
                   Actions
                 </TableHead>
               </TableRow>
@@ -189,11 +189,10 @@ const AllReports = () => {
                       </TableCell>
                       <TableCell>
                         <span
-                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border-none transition-all duration-200 ${
-                            report?.status === "Pending"
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border-none transition-all duration-200 ${report?.status === "Pending"
                               ? "bg-amber-50 text-amber-700"
                               : "bg-emerald-50 text-emerald-700"
-                          }`}
+                            }`}
                         >
                           {report?.status}
                         </span>

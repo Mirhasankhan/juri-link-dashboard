@@ -40,11 +40,10 @@ export default function UserAnalyticsCard() {
             <button
               key={value}
               onClick={() => setCurrent(value)}
-              className={`text-xs font-semibold px-4 py-1.5 rounded-lg transition-all duration-200 ${
-                current === value
+              className={`text-xs font-semibold px-4 py-1.5 rounded-lg transition-all duration-200 ${current === value
                   ? "bg-[#2e7999] text-white shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
-              }`}
+                }`}
             >
               {label}
             </button>
@@ -66,7 +65,7 @@ export default function UserAnalyticsCard() {
 
       {/* Avatar List */}
       <div className="px-6 pb-6 pt-3">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
+        <p className="text-xs font-semibold text-gray-400  tracking-widest mb-3">
           Recent Joiners
         </p>
         {profileImages.length > 0 ? (
